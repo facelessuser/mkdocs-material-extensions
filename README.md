@@ -6,7 +6,7 @@
 ![License][license-image-mit]
 # MkDocs Material Extensions
 
-Markdown extension resources for MkDocs Material
+Markdown extension resources for [MkDocs for Material][mkdocs-material]
 
 ## Install
 
@@ -50,6 +50,7 @@ That's not all, we can also use Octicons :octicons-octoface:.
 [emoji]: https://facelessuser.github.io/mkdocs-material-extensions/extensions/emoji/
 [emoji-index]: https://facelessuser.github.io/mkdocs-material-extensions/extensions/emoji/#custom-emoji-indexes
 [emoji-generator]: https://facelessuser.github.io/mkdocs-material-extensions/extensions/emoji/#custom-emoji-generators
+[mkdocs-material]: https://github.com/squidfunk/mkdocs-material
 
 [donate-image]: https://img.shields.io/badge/Donate-PayPal-3fabd1?logo=paypal
 [donate-link]: https://www.paypal.me/facelessuser
