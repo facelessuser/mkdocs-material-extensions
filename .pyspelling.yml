@@ -1,0 +1,63 @@
+matrix:
+- name: markdown
+  sources:
+  - README.md
+  aspell:
+    lang: en
+  dictionary:
+    wordlists:
+    - .dictionary
+    output: build/dictionary/markdown.dic
+  pipeline:
+  - pyspelling.filters.markdown:
+      markdown_extensions:
+        - pymdownx.superfences:
+        - pymdownx.highlight:
+  - pyspelling.filters.html:
+      comments: false
+      attributes:
+      - title
+      - alt
+      ignores:
+      - 'code, pre'
+  - pyspelling.filters.url:
+
+- name: python
+  sources:
+  - materialx/**/*.py
+  - tests/**/*.py
+  aspell:
+    lang: en
+  dictionary:
+    wordlists:
+    - .dictionary
+    output: build/dictionary/python.dic
+  pipeline:
+  - pyspelling.filters.python:
+      group_comments: true
+  - pyspelling.flow_control.wildcard:
+      allow:
+      - py-comment
+  - pyspelling.filters.context:
+      context_visible_first: true
+      delimiters:
+      # Ignore lint (noqa) and coverage (pragma) as well as shebang (#!)
+      - open: '^(?: *(?:noqa\b|pragma: no cover)|!)'
+        close: '$'
+      # Ignore Python encoding string -*- encoding stuff -*-
+      - open: '^ *-\*-'
+        close: '-\*-$'
+  - pyspelling.filters.context:
+      context_visible_first: true
+      escapes: '\\[\\`]'
+      delimiters:
+      # Ignore multiline content between fences (fences can have 3 or more back ticks)
+      # ```
+      # content
+      # ```
+      - open: '(?s)^(?P<open> *`{3,})$'
+        close: '^(?P=open)$'
+      # Ignore text between inline back ticks
+      - open: '(?P<open>`+)'
+        close: '(?P=open)'
+  - pyspelling.filters.url:
