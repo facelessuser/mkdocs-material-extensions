@@ -1,0 +1,13 @@
+recursive-include materialx *.py
+recursive-include tests *.py
+recursive-include requirements *.txt
+recursive-exclude site *
+include .dictionary
+include .pyspelling.yml
+include setup.py
+include setup.cfg
+include tox.ini
+include .coveragerc
+include LICENSE.md
+include README.md
+include MANIFEST.in
