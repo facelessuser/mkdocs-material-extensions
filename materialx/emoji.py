@@ -13,12 +13,21 @@ import pymdownx
 from pymdownx.emoji import TWEMOJI_SVG_CDN, add_attriubtes
 import xml.etree.ElementTree as etree  # noqa: N813
 
-NO_DEEP_COPY = pymdownx.__version_info__ >= (7, 1, 0)
+OPTION_SUPPORT = pymdownx.__version_info__ >= (7, 1, 0)
 RESOURCES = os.path.dirname(inspect.getfile(material))
 
 
-def _patch_index(index, options):
+def _patch_index(options):
     """Patch the given index."""
+
+    import pymdownx.twemoji_db as twemoji_db
+
+    # Copy the Twemoji index
+    index = {
+        "name": 'twemoji',
+        "emoji": copy.deepcopy(twemoji_db.emoji) if not OPTION_SUPPORT else twemoji_db.emoji,
+        "aliases": copy.deepcopy(twemoji_db.aliases) if not OPTION_SUPPORT else twemoji_db.aliases
+    }
 
     icon_locations = options.get('custom_icons', [])
     icon_locations.append(os.path.join(RESOURCES, '.icons'))
@@ -31,30 +40,20 @@ def _patch_index(index, options):
             if name not in index['emoji'] and name not in index['aliases']:
                 # Easiest to just store the path and pull it out from the index
                 index["emoji"][name] = {'name': name, 'path': result}
-
-
-def twemoji(*args):
-    """Provide a copied Twemoji index with additional codes for Material included icons."""
-
-    import pymdownx.twemoji_db as twemoji_db
-
-    options = {}
-    md = None
-
-    if args:
-        options = args[1]
-        md = args[2]
-
-    # Copy the Twemoji index
-    index = {
-        "name": 'twemoji',
-        "emoji": copy.deepcopy(twemoji_db.emoji) if not NO_DEEP_COPY else twemoji_db.emoji,
-        "aliases": copy.deepcopy(twemoji_db.aliases) if not NO_DEEP_COPY else twemoji_db.aliases
-    }
-
-    _patch_index(index, options)
-
     return index
+
+
+if OPTION_SUPPORT:
+    def twemoji(options, md):
+        """Provide a copied Twemoji index with additional codes for Material included icons."""
+
+        return _patch_index(options)
+
+else:
+    def twemoji():
+        """Provide a copied Twemoji index with additional codes for Material included icons."""
+
+        return _patch_index({})
 
 
 def to_svg(index, shortname, alias, uc, alt, title, category, options, md):
