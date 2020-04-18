@@ -43,13 +43,13 @@ def _patch_index(options):
     return index
 
 
-if OPTION_SUPPORT:
+if OPTION_SUPPORT:  # pragma: no cover
     def twemoji(options, md):
         """Provide a copied Twemoji index with additional codes for Material included icons."""
 
         return _patch_index(options)
 
-else:
+else:  # pragma: no cover
     def twemoji():
         """Provide a copied Twemoji index with additional codes for Material included icons."""
 
