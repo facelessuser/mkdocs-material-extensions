@@ -9,40 +9,51 @@ import copy
 import codecs
 import inspect
 import material
+import pymdownx
 from pymdownx.emoji import TWEMOJI_SVG_CDN, add_attriubtes
 import xml.etree.ElementTree as etree  # noqa: N813
 
+OPTION_SUPPORT = pymdownx.__version_info__ >= (7, 1, 0)
 RESOURCES = os.path.dirname(inspect.getfile(material))
 
 
-def _patch_index(index):
+def _patch_index(options):
     """Patch the given index."""
-
-    # Find our icons
-    icon_path = os.path.join(RESOURCES, '.icons')
-    norm_base = icon_path.replace('\\', '/') + '/'
-    for result in glob.glob(icon_path.replace('\\', '/') + '/**/*.svg', recursive=True):
-        name = ':{}:'.format(result.replace('\\', '/').replace(norm_base, '', 1).replace('/', '-').lstrip('.')[:-4])
-        if name not in index['emoji'] and name not in index['aliases']:
-            # Easiest to just store the path and pull it out from the index
-            index["emoji"][name] = {'name': name, 'path': result}
-
-
-def twemoji():
-    """Provide a copied Twemoji index with additional codes for Material included icons."""
 
     import pymdownx.twemoji_db as twemoji_db
 
     # Copy the Twemoji index
     index = {
         "name": 'twemoji',
-        "emoji": copy.deepcopy(twemoji_db.emoji),
-        "aliases": copy.deepcopy(twemoji_db.aliases)
+        "emoji": copy.deepcopy(twemoji_db.emoji) if not OPTION_SUPPORT else twemoji_db.emoji,
+        "aliases": copy.deepcopy(twemoji_db.aliases) if not OPTION_SUPPORT else twemoji_db.aliases
     }
 
-    _patch_index(index)
+    icon_locations = options.get('custom_icons', [])
+    icon_locations.append(os.path.join(RESOURCES, '.icons'))
 
+    # Find our icons
+    for icon_path in icon_locations:
+        norm_base = icon_path.replace('\\', '/') + '/'
+        for result in glob.glob(icon_path.replace('\\', '/') + '/**/*.svg', recursive=True):
+            name = ':{}:'.format(result.replace('\\', '/').replace(norm_base, '', 1).replace('/', '-').lstrip('.')[:-4])
+            if name not in index['emoji'] and name not in index['aliases']:
+                # Easiest to just store the path and pull it out from the index
+                index["emoji"][name] = {'name': name, 'path': result}
     return index
+
+
+if OPTION_SUPPORT:  # pragma: no cover
+    def twemoji(options, md):
+        """Provide a copied Twemoji index with additional codes for Material included icons."""
+
+        return _patch_index(options)
+
+else:  # pragma: no cover
+    def twemoji():
+        """Provide a copied Twemoji index with additional codes for Material included icons."""
+
+        return _patch_index({})
 
 
 def to_svg(index, shortname, alias, uc, alt, title, category, options, md):
