@@ -47,6 +47,37 @@ We can also use Fontawesome Icons :fontawesome-solid-ambulance:.
 That's not all, we can also use Octicons :octicons-octoface:.
 ```
 
+## Using Local Custom Icons
+
+In MkDocs, you can override theme assets locally, and even add assets to the theme. Unfortunately, the Markdown parsing
+process isn't aware of the MkDocs environment. Luckily, if you are using PyMdown Extensions 7.1, you can pass in custom
+icon paths that will be used when constructing the emoji index and include your custom SVG assets. If a folder path of
+`theme/my_icons` was given to the index builder, all icons under `my_project/my_icons`, even in sub-folders, would
+become part of the index.
+
+```yaml
+markdown_extensions:
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+      custom_icons:
+        - theme/my_icons
+```
+
+If given an icon at `my_project/my_icons/animals/bird.svg`, the icon would be available using the emoji syntax as
+`:animals-bird:`. Notice that the base folder that is provided doesn't contribute to the icon's name. Also, folders
+are separated with `-`. Folder names and icon names should be compatible with the emoji syntax, so special characters
+should be avoided -- `-` and `_` are okay.
+
+You can provide as many paths as you would like, and they will be evaluated in the order that they are specified. The
+Material theme's own icons will be evaluated after all custom paths. This allows a user to override Material's icons if
+desired.
+
+If an icon name is already in the index, the icon will not be added. It is recommended to always have your icons in
+sub-folders to help namespace them to avoid name collisions. In the example above, `bird` was under `animals` which
+created the name `:animals-bird:` and helped create a more unique name with less of a chance of creating a duplicate
+name with existing emoji and Material icons.
+
 [emoji]: https://facelessuser.github.io/mkdocs-material-extensions/extensions/emoji/
 [emoji-index]: https://facelessuser.github.io/mkdocs-material-extensions/extensions/emoji/#custom-emoji-indexes
 [emoji-generator]: https://facelessuser.github.io/mkdocs-material-extensions/extensions/emoji/#custom-emoji-generators
