@@ -1,6 +1,9 @@
 Accessors
+Changelog
 FontAwesome
+MERCHANTABILITY
 MkDocs
+NONINFRINGEMENT
 Octicons
 PyMdown
 PyPI
@@ -16,4 +19,5 @@ pre
 pre
 prerelease
 prereleases
+sublicense
 unittest
