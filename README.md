@@ -60,8 +60,9 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
-      custom_icons:
-        - theme/my_icons
+      options:
+        custom_icons:
+          - theme/my_icons
 ```
 
 If given an icon at `my_project/my_icons/animals/bird.svg`, the icon would be available using the emoji syntax as
@@ -78,9 +79,9 @@ sub-folders to help namespace them to avoid name collisions. In the example abov
 created the name `:animals-bird:` and helped create a more unique name with less of a chance of creating a duplicate
 name with existing emoji and Material icons.
 
-[emoji]: https://facelessuser.github.io/mkdocs-material-extensions/extensions/emoji/
-[emoji-index]: https://facelessuser.github.io/mkdocs-material-extensions/extensions/emoji/#custom-emoji-indexes
-[emoji-generator]: https://facelessuser.github.io/mkdocs-material-extensions/extensions/emoji/#custom-emoji-generators
+[emoji]: https://facelessuser.github.io/pymdown-extensions/extensions/emoji/
+[emoji-index]: https://facelessuser.github.io/pymdown-extensions/extensions/emoji/#custom-emoji-indexes
+[emoji-generator]: https://facelessuser.github.io/pymdown-extensions/extensions/emoji/#custom-emoji-generators
 [mkdocs-material]: https://github.com/squidfunk/mkdocs-material
 
 [donate-image]: https://img.shields.io/badge/Donate-PayPal-3fabd1?logo=paypal
