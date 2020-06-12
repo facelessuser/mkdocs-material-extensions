@@ -29,7 +29,7 @@ def _patch_index(options):
         "aliases": copy.deepcopy(twemoji_db.aliases) if not OPTION_SUPPORT else twemoji_db.aliases
     }
 
-    icon_locations = options.get('custom_icons', [])
+    icon_locations = options.get('custom_icons', [])[:]
     icon_locations.append(os.path.join(RESOURCES, '.icons'))
 
     # Find our icons
