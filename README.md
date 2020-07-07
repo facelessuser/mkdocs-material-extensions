@@ -79,6 +79,37 @@ sub-folders to help namespace them to avoid name collisions. In the example abov
 created the name `:animals-bird:` and helped create a more unique name with less of a chance of creating a duplicate
 name with existing emoji and Material icons.
 
+## Using a custom CSS class
+
+By default the CSS class is `.twemoji` and is rendered in the inlined HTML as: 
+
+```html
+<span class="twemoji"><svg.../></span>
+```
+
+The `classes` option may be specified to customize the class attribute of each inlined SVG icon.
+
+Building upon local custom set of SVG icons example above:
+
+```diff
+ markdown_extensions:
+   - pymdownx.emoji:
+       emoji_index: !!python/name:materialx.emoji.twemoji
+       emoji_generator: !!python/name:materialx.emoji.to_svg
+       options:
++        classes: my-icon
+         custom_icons:
+           - theme/my_icons
+```
+
+The rendered HTML will be: 
+
+```html
+<span class="my-icon"><svg.../></span>
+```
+
+Multiple classes are separated with a space in the yaml config: `classes: twemoji my-icon`
+
 [emoji]: https://facelessuser.github.io/pymdown-extensions/extensions/emoji/
 [emoji-index]: https://facelessuser.github.io/pymdown-extensions/extensions/emoji/#custom-emoji-indexes
 [emoji-generator]: https://facelessuser.github.io/pymdown-extensions/extensions/emoji/#custom-emoji-generators
