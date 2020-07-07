@@ -86,10 +86,10 @@ name with existing emoji and Material icons.
 
 [donate-image]: https://img.shields.io/badge/Donate-PayPal-3fabd1?logo=paypal
 [donate-link]: https://www.paypal.me/facelessuser
-[github-ci-image]: https://github.com/facelessuser/mkdocs-material-extensions/workflows/build/badge.svg
-[github-ci-link]: https://github.com/facelessuser/mkdocs-material-extensions/actions?workflow=build
+[github-ci-image]: https://github.com/facelessuser/mkdocs-material-extensions/workflows/build/badge.svg?branch=master&event=push
+[github-ci-link]: https://github.com/facelessuser/mkdocs-material-extensions/actions?query=workflow%3Abuild+branch%3Amaster
 [discord-image]: https://img.shields.io/discord/678289859768745989?logo=discord&logoColor=aaaaaa&color=mediumpurple&labelColor=333333
-[discord-link]: https://discord.gg/fqQ7ypS
+[discord-link]: https://discord.gg/TWs8Tgr
 [codecov-image]: https://img.shields.io/codecov/c/github/facelessuser/mkdocs-material-extensions/master.svg?logo=codecov&logoColor=aaaaaa&labelColor=333333
 [codecov-link]: https://codecov.io/github/facelessuser/mkdocs-material-extensions
 [pypi-image]: https://img.shields.io/pypi/v/mkdocs-material-extensions.svg?logo=pypi&logoColor=aaaaaa&labelColor=333333
