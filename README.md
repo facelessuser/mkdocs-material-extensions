@@ -10,8 +10,17 @@ Markdown extension resources for [MkDocs for Material][mkdocs-material]
 
 ## Install
 
+Generally, just installing MkDocs Material will automatically install `mkdocs-material-extensions`. But if you had a
+need to manually install it, you can use pip.
+
 ```
 pip install mkdocs-material-extensions
+```
+
+But make sure you've also installed MkDocs Material as well as this won't work without it. 
+
+```
+pip install mkdocs-material
 ```
 
 ## Inline SVG Icons

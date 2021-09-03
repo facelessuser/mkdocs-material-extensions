@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.2
+
+- **FIX**: No longer specify `mkdocs-material` as a dependency as `mkdocs-material` specifies these extensions as a
+  dependency. This created a circular dependency. While `pip` has no issues with such scenarios, this created issues
+  for some versioning packages. `mkdocs-material` (the only package this works with) will now manage which version of
+  `mkdocs-material-extensions` it needs.
+
 ## 1.0.1
 
 - **FIX**: Ensure we don't modify the original icon path setting.
