@@ -1,3 +1,5 @@
 pytest
 pytest-cov
 coverage
+mkdocs-material>=5.0.0
+beautifulsoup4

@@ -10,11 +10,23 @@ import codecs
 import inspect
 import material
 import pymdownx
+import warnings
 from pymdownx.emoji import TWEMOJI_SVG_CDN, add_attriubtes
 import xml.etree.ElementTree as etree  # noqa: N813
+import pkg_resources
 
+EXPECTED_M_VER = (5, 0, 0)
+M_VER = tuple(int(x) for x in pkg_resources.require('mkdocs-material')[0].version.split('.')[:3])
 OPTION_SUPPORT = pymdownx.__version_info__ >= (7, 1, 0)
 RESOURCES = os.path.dirname(inspect.getfile(material))
+
+# Check that we have the expected version running
+if M_VER < EXPECTED_M_VER:  # pragma: no cover
+    warnings.warn(
+        'mkdocs-material-extensions expects a mkdocs-material version of at least {} to work properly'.format(
+            EXPECTED_M_VER
+        )
+    )
 
 
 def _patch_index(options):
