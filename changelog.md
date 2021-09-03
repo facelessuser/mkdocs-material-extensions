@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.3
+
+- **FIX**: Remove version check which is not compatible with Material Insiders. Material will completely be responsible
+  for ensuring the correct version of `mkdocs-material-extensions`.s
+
 ## 1.0.2
 
 - **FIX**: No longer specify `mkdocs-material` as a dependency as `mkdocs-material` specifies these extensions as a
