@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0
+
+- **NEW**: Drop Python 3.6 and officially support 3.10.
+
 ## 1.0.3
 
 - **FIX**: Remove version check which is not compatible with Material Insiders. Material will completely be responsible
