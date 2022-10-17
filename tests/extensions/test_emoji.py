@@ -22,7 +22,7 @@ class TestEmoji(util.MdCase):
         text = r'''
         We can use Material Icons :material-airplane:.
 
-        We can also use Fontawesome Icons :fontawesome-solid-ambulance:.
+        We can also use Fontawesome Icons :fontawesome-solid-hand:.
 
         That's not all, we can also use Octicons :octicons-alert-16:.
         '''
