@@ -7,6 +7,7 @@ import os
 import glob
 import copy
 import codecs
+import functools
 import inspect
 import material
 import pymdownx
@@ -20,6 +21,13 @@ RESOURCES = os.path.dirname(inspect.getfile(material))
 def _patch_index(options):
     """Patch the given index."""
 
+    icon_locations = options.get('custom_icons', [])[:]
+    icon_locations.append(os.path.join(RESOURCES, '.icons'))
+    return _patch_index_for_locations(tuple(icon_locations))
+
+
+@functools.lru_cache(maxsize=None)
+def _patch_index_for_locations(icon_locations):
     import pymdownx.twemoji_db as twemoji_db
 
     # Copy the Twemoji index
@@ -28,9 +36,6 @@ def _patch_index(options):
         "emoji": copy.deepcopy(twemoji_db.emoji) if not OPTION_SUPPORT else twemoji_db.emoji,
         "aliases": copy.deepcopy(twemoji_db.aliases) if not OPTION_SUPPORT else twemoji_db.aliases
     }
-
-    icon_locations = options.get('custom_icons', [])[:]
-    icon_locations.append(os.path.join(RESOURCES, '.icons'))
 
     # Find our icons
     for icon_path in icon_locations:
