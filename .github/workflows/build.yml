@@ -26,7 +26,7 @@ jobs:
           - python-version: 3.9
             tox-env: py39
           - python-version: '3.10'
-            tox-env: py36
+            tox-env: py310
 
     env:
       TOXENV: ${{ matrix.tox-env }}
