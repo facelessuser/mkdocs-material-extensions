@@ -3,6 +3,7 @@
 ## 1.1.0
 
 - **NEW**: Drop Python 3.6 and officially support 3.10.
+- **NEW**: Cache emoji table to reduce build times.
 
 ## 1.0.3
 

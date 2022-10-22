@@ -69,9 +69,9 @@ class Version(namedtuple("Version", ["major", "minor", "micro", "release", "pre"
     Version(1, 0, 0, "final")                    1.0
     Version(1, 2, 0, "final")                    1.2
     Version(1, 2, 3, "final")                    1.2.3
-    Version(1, 2, 0, ".dev-alpha", pre=4)        1.2a4
-    Version(1, 2, 0, ".dev-beta", pre=4)         1.2b4
-    Version(1, 2, 0, ".dev-candidate", pre=4)    1.2rc4
+    Version(1, 2, 0, "alpha", pre=4)             1.2a4
+    Version(1, 2, 0, "beta", pre=4)              1.2b4
+    Version(1, 2, 0, "candidate", pre=4)         1.2rc4
     Version(1, 2, 0, "final", post=1)            1.2.post1
     Version(1, 2, 3, ".dev")                     1.2.3.dev0
     Version(1, 2, 3, ".dev", dev=1)              1.2.3.dev1
@@ -113,12 +113,12 @@ class Version(namedtuple("Version", ["major", "minor", "micro", "release", "pre"
             elif dev:
                 raise ValueError("Version is not a development release.")
 
-        return super(Version, cls).__new__(cls, major, minor, micro, release, pre, post, dev)
+        return super().__new__(cls, major, minor, micro, release, pre, post, dev)
 
     def _is_pre(self):
         """Is prerelease."""
 
-        return self.pre > 0
+        return bool(self.pre > 0)
 
     def _is_dev(self):
         """Is development."""
@@ -128,7 +128,7 @@ class Version(namedtuple("Version", ["major", "minor", "micro", "release", "pre"
     def _is_post(self):
         """Is post."""
 
-        return self.post > 0
+        return bool(self.post > 0)
 
     def _get_dev_status(self):  # pragma: no cover
         """Get development status string."""
@@ -139,7 +139,7 @@ class Version(namedtuple("Version", ["major", "minor", "micro", "release", "pre"
         """Get the canonical output string."""
 
         # Assemble major, minor, micro version and append `pre`, `post`, or `dev` if needed..
-        if self.micro == 0:
+        if self.micro == 0 and self.major != 0:
             ver = "{}.{}".format(self.major, self.minor)
         else:
             ver = "{}.{}.{}".format(self.major, self.minor, self.micro)
@@ -153,10 +153,13 @@ class Version(namedtuple("Version", ["major", "minor", "micro", "release", "pre"
         return ver
 
 
-def parse_version(ver, pre=False):
+def parse_version(ver):
     """Parse version into a comparable Version tuple."""
 
     m = RE_VER.match(ver)
+
+    if m is None:
+        raise ValueError("'{}' is not a valid version".format(ver))
 
     # Handle major, minor, micro
     major = int(m.group('major'))

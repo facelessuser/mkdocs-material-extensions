@@ -37,7 +37,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
       if: "!endsWith(matrix.python-version, '-dev')"
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
     - name: Set up development Python ${{ matrix.python-version }}
@@ -47,7 +47,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip setuptools tox coverage codecov
+        python -m pip install --upgrade pip build tox coverage codecov
     - name: Test
       run: |
         python -m tox
@@ -74,12 +74,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip setuptools tox
+        python -m pip install --upgrade pip build tox
     - name: Lint
       run: |
         python -m tox
@@ -98,12 +98,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip setuptools tox
+        python -m pip install --upgrade pip build tox
     - name: Install Aspell
       run: |
         sudo apt-get install aspell aspell-en

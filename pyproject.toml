@@ -1,7 +1,50 @@
 [build-system]
 requires = [
-    "setuptools>=42",
-    "wheel"
+    "hatchling>=0.21.1",
+]
+build-backend = "hatchling.build"
+
+[project]
+name = "mkdocs-material-extensions"
+description = "Extension pack for Python Markdown and MkDocs Material."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.7"
+authors = [
+    { name = "Isaac Muse", email = "Isaac.Muse@gmail.com" },
+]
+keywords = [
+    "extensions",
+    "markdown",
+]
+dynamic = [
+    "classifiers",
+    "dependencies",
+    "version",
 ]
 
-build-backend = "setuptools.build_meta"
+[project.urls]
+Homepage = "https://github.com/facelessuser/mkdocs-material-extensions'"
+
+[tool.hatch.version]
+source = "code"
+path = "materialx/__meta__.py"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/requirements/*.txt",
+    "/materialx/**/*.py",
+    "/tests/**/*.py",
+    "/.pyspelling.yml",
+    "/.coveragerc",
+    "/tox.ini",
+    "/LICENSE.md",
+    "/changelog.md"
+]
+
+[tool.hatch.build.targets.wheel]
+include = [
+    "/materialx",
+]
+
+[tool.hatch.metadata.hooks.custom]
