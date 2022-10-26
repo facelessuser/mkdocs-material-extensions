@@ -24,7 +24,7 @@ dynamic = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/facelessuser/mkdocs-material-extensions'"
+Homepage = "https://github.com/facelessuser/mkdocs-material-extensions"
 
 [tool.hatch.version]
 source = "code"
