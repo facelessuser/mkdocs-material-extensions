@@ -40,7 +40,7 @@ def _patch_index_for_locations(icon_locations):
     # Find our icons
     for icon_path in icon_locations:
         norm_base = icon_path.replace('\\', '/') + '/'
-        for result in glob.glob(icon_path.replace('\\', '/') + '/**/*.svg', recursive=True):
+        for result in glob.glob(glob.escape(icon_path.replace('\\', '/')) + '/**/*.svg', recursive=True):
             name = ':{}:'.format(result.replace('\\', '/').replace(norm_base, '', 1).replace('/', '-').lstrip('.')[:-4])
             if name not in index['emoji'] and name not in index['aliases']:
                 # Easiest to just store the path and pull it out from the index
