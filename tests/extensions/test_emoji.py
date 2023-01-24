@@ -46,5 +46,5 @@ class TestEmoji(util.MdCase):
 
         self.check_markdown(
             ':smile:',
-            '<p><img alt="\U0001f604" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f604.svg" title=":smile:" /></p>'  # noqa: E501
+            '<p><img alt="\U0001f604" class="twemoji" src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f604.svg" title=":smile:" /></p>'  # noqa: E501
         )
