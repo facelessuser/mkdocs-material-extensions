@@ -16,9 +16,9 @@ import xml.etree.ElementTree as etree  # noqa: N813
 
 OPTION_SUPPORT = pymdownx.__version_info__ >= (7, 1, 0)
 RESOURCES = os.path.dirname(inspect.getfile(material))
-if os.path.exists(os.path.join(RESOURCES, 'templates', '.icons')):
+if os.path.exists(os.path.join(RESOURCES, 'templates', '.icons')):  # pragma: no cover
     RES_PATH = os.path.join(RESOURCES, 'templates', '.icons')
-else:
+else:  # pragma: no cover
     RES_PATH = os.path.join(RESOURCES, '.icons')
 
 
