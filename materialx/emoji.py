@@ -22,7 +22,7 @@ def _patch_index(options):
     """Patch the given index."""
 
     icon_locations = options.get('custom_icons', [])[:]
-    icon_locations.append(os.path.join(RESOURCES, '.icons'))
+    icon_locations.append(os.path.join(RESOURCES, 'templates', '.icons'))
     return _patch_index_for_locations(tuple(icon_locations))
 
 
