@@ -1,10 +1,16 @@
 # Changelog
 
+## 1.2
+
+- **NEW**: Add official support for Python 3.11 and 3.12.
+- **NEW**: Remove support for Python 3.7.
+- **FIX**: Update to support latest Material.
+
 ## 1.1.1
 
 - **FIX**: Properly handle special glob characters in path.
 
-## 1.1.0
+## 1.1
 
 - **NEW**: Drop Python 3.6 and officially support 3.10.
 - **NEW**: Cache emoji table to reduce build times.

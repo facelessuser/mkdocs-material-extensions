@@ -3,6 +3,7 @@ from .. import util
 from materialx import emoji
 from bs4 import BeautifulSoup
 import markdown
+from pymdownx.emoji import TWEMOJI_SVG_CDN
 
 
 class TestEmoji(util.MdCase):
@@ -46,5 +47,5 @@ class TestEmoji(util.MdCase):
 
         self.check_markdown(
             ':smile:',
-            '<p><img alt="\U0001f604" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f604.svg" title=":smile:" /></p>'  # noqa: E501
+            '<p><img alt="\U0001f604" class="twemoji" src="{}1f604.svg" title=":smile:" /></p>'.format(TWEMOJI_SVG_CDN)  # noqa: E501
         )
