@@ -16,13 +16,17 @@ import xml.etree.ElementTree as etree  # noqa: N813
 
 OPTION_SUPPORT = pymdownx.__version_info__ >= (7, 1, 0)
 RESOURCES = os.path.dirname(inspect.getfile(material))
+if os.path.exists(os.path.join(RESOURCES, 'templates', '.icons')):
+    RES_PATH = os.path.join(RESOURCES, 'templates', '.icons')
+else:
+    RES_PATH = os.path.join(RESOURCES, '.icons')
 
 
 def _patch_index(options):
     """Patch the given index."""
 
     icon_locations = options.get('custom_icons', [])[:]
-    icon_locations.append(os.path.join(RESOURCES, 'templates', '.icons'))
+    icon_locations.append(RES_PATH)
     return _patch_index_for_locations(tuple(icon_locations))
 
 
