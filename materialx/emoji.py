@@ -32,15 +32,7 @@ else:  # pragma: no cover
     RES_PATH = os.path.join(RESOURCES, '.icons')
 
 
-def _patch_index(options):
-    """Patch the given index."""
-
-    icon_locations = options.get('custom_icons', [])[:]
-    icon_locations.append(RES_PATH)
-    return _patch_index_for_locations(tuple(icon_locations))
-
-
-def deprecated(message, stacklevel=2):  # pragma: no cover
+def deprecated(message, stacklevel=2, name=None):  # pragma: no cover
     """
     Raise a `DeprecationWarning` when wrapped function/method is called.
 
@@ -55,13 +47,22 @@ def deprecated(message, stacklevel=2):  # pragma: no cover
         @wraps(func)
         def _deprecated_func(*args, **kwargs):
             warnings.warn(
-                f"'{func.__name__}' is deprecated. {message}",
+                f"'{func.__name__ if name is None else name}' is deprecated. {message}",
                 category=DeprecationWarning,
                 stacklevel=stacklevel
             )
             return func(*args, **kwargs)
         return _deprecated_func
     return _wrapper
+
+
+@deprecated(DEPRECATED.format('material.extensions.emoji.twemoji'), name='materialx.emoji.twemoji')
+def _patch_index(options):
+    """Patch the given index."""
+
+    icon_locations = options.get('custom_icons', [])[:]
+    icon_locations.append(RES_PATH)
+    return _patch_index_for_locations(tuple(icon_locations))
 
 
 @functools.lru_cache(maxsize=None)
@@ -87,21 +88,19 @@ def _patch_index_for_locations(icon_locations):
 
 
 if OPTION_SUPPORT:  # pragma: no cover
-    @deprecated(DEPRECATED.format('material.extensions.emoji.twemoji'))
     def twemoji(options, md):
         """Provide a copied Twemoji index with additional codes for Material included icons."""
 
         return _patch_index(options)
 
 else:  # pragma: no cover
-    @deprecated(DEPRECATED.format('material.extensions.emoji.twemoji'))
     def twemoji():
         """Provide a copied Twemoji index with additional codes for Material included icons."""
 
         return _patch_index({})
 
 
-@deprecated(DEPRECATED.format('material.extensions.emoji.to_svg'))
+@deprecated(DEPRECATED.format('material.extensions.emoji.to_svg'), 1, name='materialx.emoji.to_svg')
 def to_svg(index, shortname, alias, uc, alt, title, category, options, md):
     """Return SVG element."""
 
