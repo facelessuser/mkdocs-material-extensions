@@ -6,6 +6,11 @@
 ![License][license-image-mit]
 # MkDocs Material Extensions
 
+> NOTE: This project is now deprecated as MkDocs for Material now implements this logic directly.
+> Users should migrate to using `mkdocs-material`'s `material.extensions.emoji.twemoji` and 
+> `material.extensions.emoji.to_svg` in place of the respective `materialx.emoji.twemoji` and `materialx.emoji.to_svg`
+> functions provided by this library.
+
 Markdown extension resources for [MkDocs for Material][mkdocs-material]
 
 ## Install

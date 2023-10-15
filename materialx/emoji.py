@@ -13,6 +13,16 @@ import material
 import pymdownx
 from pymdownx.emoji import TWEMOJI_SVG_CDN, add_attriubtes
 import xml.etree.ElementTree as etree  # noqa: N813
+import warnings
+from functools import wraps
+
+DEPRECATED = """
+Material emoji logic has been officially moved into mkdocs-material
+version 9.4. Please use Material's '{}' as mkdocs_material_extensions
+is deprecated and will no longer be supported moving forward. This
+is the last release.
+"""
+
 
 OPTION_SUPPORT = pymdownx.__version_info__ >= (7, 1, 0)
 RESOURCES = os.path.dirname(inspect.getfile(material))
@@ -28,6 +38,30 @@ def _patch_index(options):
     icon_locations = options.get('custom_icons', [])[:]
     icon_locations.append(RES_PATH)
     return _patch_index_for_locations(tuple(icon_locations))
+
+
+def deprecated(message, stacklevel=2):  # pragma: no cover
+    """
+    Raise a `DeprecationWarning` when wrapped function/method is called.
+
+    Usage:
+
+        @deprecated("This method will be removed in version X; use Y instead.")
+        def some_method()"
+            pass
+    """
+
+    def _wrapper(func):
+        @wraps(func)
+        def _deprecated_func(*args, **kwargs):
+            warnings.warn(
+                f"'{func.__name__}' is deprecated. {message}",
+                category=DeprecationWarning,
+                stacklevel=stacklevel
+            )
+            return func(*args, **kwargs)
+        return _deprecated_func
+    return _wrapper
 
 
 @functools.lru_cache(maxsize=None)
@@ -53,18 +87,21 @@ def _patch_index_for_locations(icon_locations):
 
 
 if OPTION_SUPPORT:  # pragma: no cover
+    @deprecated(DEPRECATED.format('material.extensions.emoji.twemoji'))
     def twemoji(options, md):
         """Provide a copied Twemoji index with additional codes for Material included icons."""
 
         return _patch_index(options)
 
 else:  # pragma: no cover
+    @deprecated(DEPRECATED.format('material.extensions.emoji.twemoji'))
     def twemoji():
         """Provide a copied Twemoji index with additional codes for Material included icons."""
 
         return _patch_index({})
 
 
+@deprecated(DEPRECATED.format('material.extensions.emoji.to_svg'))
 def to_svg(index, shortname, alias, uc, alt, title, category, options, md):
     """Return SVG element."""
 
