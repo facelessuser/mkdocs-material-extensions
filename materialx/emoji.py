@@ -19,11 +19,11 @@ import logging
 
 log = logging.getLogger('mkdocs')
 
-DEPRECATED = """
+DEPRECATED = """\
 Material emoji logic has been officially moved into mkdocs-material
-version 9.4. Please use Material's '{}' as mkdocs_material_extensions
-is deprecated and will no longer be supported moving forward. This
-is the last release.
+version 9.4. Please use Material's '{}'
+as mkdocs_material_extensions is deprecated and will no longer be
+supported moving forward. This is the last release.
 """
 
 
@@ -39,7 +39,7 @@ else:  # pragma: no cover
 def log_msg(message):
     """Log message."""
 
-    log.warn(message)
+    log.warning(message)
 
 
 def deprecated(message, stacklevel=2, name=None):  # pragma: no cover
@@ -57,7 +57,7 @@ def deprecated(message, stacklevel=2, name=None):  # pragma: no cover
         @wraps(func)
         def _deprecated_func(*args, **kwargs):
             warnings.warn(
-                f"'{func.__name__ if name is None else name}' is deprecated. {message}",
+                f"'{func.__name__ if name is None else name}' is deprecated.\n{message}",
                 category=DeprecationWarning,
                 stacklevel=stacklevel
             )
