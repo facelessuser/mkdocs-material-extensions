@@ -15,6 +15,9 @@ from pymdownx.emoji import TWEMOJI_SVG_CDN, add_attriubtes
 import xml.etree.ElementTree as etree  # noqa: N813
 import warnings
 from functools import wraps
+import logging
+
+log = logging.getLogger('mkdocs')
 
 DEPRECATED = """
 Material emoji logic has been officially moved into mkdocs-material
@@ -30,6 +33,13 @@ if os.path.exists(os.path.join(RESOURCES, 'templates', '.icons')):  # pragma: no
     RES_PATH = os.path.join(RESOURCES, 'templates', '.icons')
 else:  # pragma: no cover
     RES_PATH = os.path.join(RESOURCES, '.icons')
+
+
+@functools.lru_cache(maxsize=None)
+def log_msg(message):
+    """Log message."""
+
+    log.warn(message)
 
 
 def deprecated(message, stacklevel=2, name=None):  # pragma: no cover
@@ -51,6 +61,8 @@ def deprecated(message, stacklevel=2, name=None):  # pragma: no cover
                 category=DeprecationWarning,
                 stacklevel=stacklevel
             )
+
+            log_msg(message)
             return func(*args, **kwargs)
         return _deprecated_func
     return _wrapper
