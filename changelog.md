@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3
+
+- **NEW**: The final release. `mkdocs-material` (version 9.4) now has this library's logic built-in making this library
+  obsolete. Users should migrate to using `mkdocs-material`'s `material.extensions.emoji.twemoji` and
+  `material.extensions.emoji.to_svg` in place of the respective `materialx.emoji.twemoji` and `materialx.emoji.to_svg`
+  functions.
+
 ## 1.2
 
 - **NEW**: Add official support for Python 3.11 and 3.12.

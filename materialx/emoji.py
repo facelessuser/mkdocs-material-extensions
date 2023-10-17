@@ -13,6 +13,19 @@ import material
 import pymdownx
 from pymdownx.emoji import TWEMOJI_SVG_CDN, add_attriubtes
 import xml.etree.ElementTree as etree  # noqa: N813
+import warnings
+from functools import wraps
+import logging
+
+log = logging.getLogger('mkdocs')
+
+DEPRECATED = """\
+Material emoji logic has been officially moved into mkdocs-material
+version 9.4. Please use Material's '{}'
+as mkdocs_material_extensions is deprecated and will no longer be
+supported moving forward. This is the last release.
+"""
+
 
 OPTION_SUPPORT = pymdownx.__version_info__ >= (7, 1, 0)
 RESOURCES = os.path.dirname(inspect.getfile(material))
@@ -22,6 +35,40 @@ else:  # pragma: no cover
     RES_PATH = os.path.join(RESOURCES, '.icons')
 
 
+@functools.lru_cache(maxsize=None)
+def log_msg(message):
+    """Log message."""
+
+    log.warning(message)
+
+
+def deprecated(message, stacklevel=2, name=None):  # pragma: no cover
+    """
+    Raise a `DeprecationWarning` when wrapped function/method is called.
+
+    Usage:
+
+        @deprecated("This method will be removed in version X; use Y instead.")
+        def some_method()"
+            pass
+    """
+
+    def _wrapper(func):
+        @wraps(func)
+        def _deprecated_func(*args, **kwargs):
+            warnings.warn(
+                f"'{func.__name__ if name is None else name}' is deprecated.\n{message}",
+                category=DeprecationWarning,
+                stacklevel=stacklevel
+            )
+
+            log_msg(message)
+            return func(*args, **kwargs)
+        return _deprecated_func
+    return _wrapper
+
+
+@deprecated(DEPRECATED.format('material.extensions.emoji.twemoji'), name='materialx.emoji.twemoji')
 def _patch_index(options):
     """Patch the given index."""
 
@@ -65,6 +112,7 @@ else:  # pragma: no cover
         return _patch_index({})
 
 
+@deprecated(DEPRECATED.format('material.extensions.emoji.to_svg'), 1, name='materialx.emoji.to_svg')
 def to_svg(index, shortname, alias, uc, alt, title, category, options, md):
     """Return SVG element."""
 
