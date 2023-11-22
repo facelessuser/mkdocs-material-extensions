@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.1
+
+- **FIX**: Better deprecation warning.
+
 ## 1.3
 
 - **NEW**: The final release. `mkdocs-material` (version 9.4) now has this library's logic built-in making this library
