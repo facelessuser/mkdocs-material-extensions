@@ -22,7 +22,16 @@ log = logging.getLogger('mkdocs')
 DEPRECATED = """\
 Material emoji logic has been officially moved into mkdocs-material
 version 9.4. Please use Material's '{}'
-as mkdocs_material_extensions is deprecated and will no longer be
+instead of '{}' in your 'mkdocs.yml' file.
+
+```
+markdown_extensions:
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+```
+
+'mkdocs_material_extensions' is deprecated and will no longer be
 supported moving forward. This is the last release.
 """
 
@@ -68,7 +77,10 @@ def deprecated(message, stacklevel=2, name=None):  # pragma: no cover
     return _wrapper
 
 
-@deprecated(DEPRECATED.format('material.extensions.emoji.twemoji'), name='materialx.emoji.twemoji')
+@deprecated(
+    DEPRECATED.format('material.extensions.emoji.twemoji', 'materialx.emoji.twemoji'),
+    name='materialx.emoji.twemoji'
+)
 def _patch_index(options):
     """Patch the given index."""
 
@@ -112,7 +124,11 @@ else:  # pragma: no cover
         return _patch_index({})
 
 
-@deprecated(DEPRECATED.format('material.extensions.emoji.to_svg'), 1, name='materialx.emoji.to_svg')
+@deprecated(
+    DEPRECATED.format('material.extensions.emoji.to_svg', 'materialx.emoji.to_svg'),
+    1,
+    name='materialx.emoji.to_svg'
+)
 def to_svg(index, shortname, alias, uc, alt, title, category, options, md):
     """Return SVG element."""
 
